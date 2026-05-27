@@ -49,8 +49,8 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # モデル
 tokenizer = BertJapaneseTokenizer.from_pretrained("cl-tohoku/bert-base-japanese-whole-word-masking")
 model = BertForSequenceClassification.from_pretrained("cl-tohoku/bert-base-japanese-whole-word-masking", num_labels = 2)
-# model.load_state_dict(torch.load("bloodborne_fold1.pt", map_location=device))
-model.load_state_dict(torch.load("8ban_fold1.pt", map_location=device))
+# 学習済みモデル読み込み
+model.load_state_dict(torch.load("model.pt", map_location=device))
 model.to(device)
 model.eval()
 
@@ -77,7 +77,6 @@ def infer(text):
     with torch.no_grad():
         pred = torch.argmax(model(**inputs).logits, dim=1).item()
 
-    print(pred)
     # 推論結果を返す 
     return pred
 
