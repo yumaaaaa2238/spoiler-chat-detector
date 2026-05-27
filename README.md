@@ -1,0 +1,1 @@
+# spoiler-chat-detector
